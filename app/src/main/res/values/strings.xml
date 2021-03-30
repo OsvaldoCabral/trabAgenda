@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Agenda</string>
+    <string name="titleLogin">Login</string>
+    <string name="hintFieldName">Nome</string>
+    <string name="hintFieldPassword">Senha</string>
+    <string name="buttonLogIn">LOG IN</string>
+    <string name="buttonSigIn">SIG IN</string>
+    <string name="btnSave">Salvar</string>
+    <string name="titleAgenda">Agenda</string>
+    <string name="buttonAdd">Adicionar</string>
+    <string name="titleNome">Nome</string>
+    <string name="titleAddress">Endereço</string>
+    <string name="titlePhone">Telefone</string>
+    <string name="titleType">Tipo</string>
+    <string name="hintFieldAddress">Endereço</string>
+    <string name="hintFieldPhone">Telefone</string>
+    <string name="alert_error_auth">Usuário ou senha inválidos</string>
+    <string name="alert_success_item_created">Item cadastrado com sucesso!</string>
+    <string-array name="array_types">
+        <item>Casa</item>
+        <item>Trabalho</item>
+        <item>Outro</item>
+    </string-array>
+</resources>
