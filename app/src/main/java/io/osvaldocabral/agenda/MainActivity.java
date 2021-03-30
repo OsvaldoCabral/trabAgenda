@@ -75,10 +75,14 @@ public class MainActivity extends AppCompatActivity {
             String line;
             String[] aux;
 
+            int cont = -1;
             while ((line = reader.readLine()) != null) {
+                cont++;
                 aux = line.split(";");
-                if (aux[0].equals(name) && aux[1].equals(password))
+                if (aux[0].equals(name) && aux[1].equals(password)) {
                     isValidAccess = true;
+                    UserSingleton.getInstance().userIndex = cont;
+                }
             }
 
             reader.close();

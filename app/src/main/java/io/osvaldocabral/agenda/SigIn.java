@@ -32,7 +32,11 @@ public class SigIn extends AppCompatActivity {
             OutputStream stream = SigIn.this.openFileOutput("listUser.txt", MODE_PRIVATE);
             OutputStreamWriter writer = new OutputStreamWriter(stream);
 
-            writer.write("admin;admin@123");
+            writer.write("admin;admin@123\n");
+            writer.write("osvaldo;osvaldo@123\n");
+            writer.write("matheus;matheus@123\n");
+            writer.write("jhonatan;jhonatan@123\n");
+            writer.write("vinicius;vini@123\n");
 
             writer.flush();
             writer.close();

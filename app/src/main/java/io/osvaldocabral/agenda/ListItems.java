@@ -25,7 +25,9 @@ public class ListItems extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                ItemSingleton.getInstance().itemIndex = position;
+                Intent intent = new Intent(ListItems.this, InfoItem.class);
+                startActivity(intent);
             }
         });
 
@@ -39,7 +41,9 @@ public class ListItems extends AppCompatActivity {
         updateList();
     }
 
+
     public void buttonAddClicked(View view) {
+        ItemSingleton.getInstance().itemIndex = -1;
         Intent intent = new Intent(ListItems.this, InfoItem.class);
         startActivity(intent);
     }
