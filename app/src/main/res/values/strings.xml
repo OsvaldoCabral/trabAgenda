@@ -16,6 +16,7 @@
     <string name="hintFieldPhone">Telefone</string>
     <string name="alert_error_auth">Usuário ou senha inválidos</string>
     <string name="alert_success_item_created_updated">Item salvo com sucesso!</string>
+    <string name="alert_success_user_created">Login criado com sucesso!</string>
     <string-array name="array_types">
         <item>Casa</item>
         <item>Trabalho</item>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -49,6 +50,9 @@ public class SigIn extends AppCompatActivity {
             writer.flush();
             writer.close();
             writer.close();
+
+            Toast.makeText(SigIn.this, R.string.alert_success_user_created, Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
