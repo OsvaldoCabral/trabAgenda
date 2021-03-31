@@ -98,7 +98,14 @@ public class InfoItem extends AppCompatActivity {
         editTextName.setText(item.getName());
         editTextAddress.setText(item.getAddress());
         editTextPhone.setText(item.getPhone());
-        spinnerInfo.setSelection();
+
+        String spinnerValue = item.getType();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.array_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerInfo.setAdapter(adapter);
+
+        int spinnerPosition = adapter.getPosition(spinnerValue);
+        spinnerInfo.setSelection(spinnerPosition);
     }
 
 }
