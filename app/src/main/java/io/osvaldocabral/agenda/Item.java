@@ -61,9 +61,11 @@ public class Item {
 
     @Override
     public String toString() {
-        return name + '\n' +
-                address + '\n' +
-                phone + '\n' +
-                type;
+        return idUser + ";" +
+                name + ";" +
+                address + ";" +
+                phone + ";" +
+                type + ";";
+
     }
 }

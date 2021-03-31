@@ -9,7 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+
 
 public class ListItems extends AppCompatActivity {
 
@@ -25,7 +31,7 @@ public class ListItems extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ItemSingleton.getInstance().itemIndex = position;
+                ItemSingleton.getInstance().itemIndex = ItemSingleton.getInstance().getPositionUpdate(position);
                 Intent intent = new Intent(ListItems.this, InfoItem.class);
                 startActivity(intent);
             }
@@ -50,14 +56,45 @@ public class ListItems extends AppCompatActivity {
 
 
     public void updateList() {
-        ArrayAdapter<Item> adapter = new ArrayAdapter<>(
+        loadItemsFromFile();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 ListItems.this,
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
-                ItemSingleton.getInstance().getListItem()
+                ItemSingleton.getInstance().getFilteredListItem()
         );
 
         listView.setAdapter(adapter);
     }
+
+
+    public void loadItemsFromFile() {
+        try {
+            InputStream stream = openFileInput("listItems.txt");
+            InputStreamReader streamReader = new InputStreamReader(stream);
+
+            BufferedReader reader = new BufferedReader(streamReader);
+            String line;
+
+            ArrayList<Item> item = new ArrayList<>();
+            String[] aux;
+
+            while((line = reader.readLine()) != null) {
+                aux = line.split(";");
+                item.add(new Item(Integer.parseInt(aux[0]), aux[1], aux[2], aux[3], aux[4]));
+            }
+
+            ItemSingleton.getInstance().listItems = item;
+
+            reader.close();
+            streamReader.close();
+            stream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

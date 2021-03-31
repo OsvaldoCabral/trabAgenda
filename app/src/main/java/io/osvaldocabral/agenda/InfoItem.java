@@ -11,6 +11,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 public class InfoItem extends AppCompatActivity {
 
     EditText editTextName;
@@ -39,26 +44,42 @@ public class InfoItem extends AppCompatActivity {
             isUpdate = true;
             positionToUpdate = ItemSingleton.getInstance().itemIndex;
             Item item = ItemSingleton.getInstance().listItems.get(positionToUpdate);
-            fillFieldsUpdate(item, positionToUpdate);
+            fillFieldsUpdate(item);
         }
-    }
-
-
-    public void fillFieldsUpdate(Item item, int positionToUpdate) {
-        editTextName.setText(item.getName());
-        editTextAddress.setText(item.getAddress());
-        editTextPhone.setText(item.getPhone());
-        spinnerInfo.setSelection(positionToUpdate);
     }
 
 
     public void btnSalveInfoClick(View view) {
         Item newItem = newItem();
-        if(isUpdate) ItemSingleton.getInstance().updateItem(newItem);
+        if (isUpdate) ItemSingleton.getInstance().updateItem(newItem);
         else ItemSingleton.getInstance().createItem(newItem);
+
+        saveItemToFile();
 
         Toast.makeText(InfoItem.this, R.string.alert_success_item_created_updated, Toast.LENGTH_SHORT).show();
         super.onBackPressed();
+    }
+
+
+    public void saveItemToFile() {
+        try {
+            OutputStream stream = InfoItem.this.openFileOutput("listItems.txt", MODE_PRIVATE);
+            OutputStreamWriter writer = new OutputStreamWriter(stream);
+
+            for (int i = 0; i < ItemSingleton.getInstance().listItems.size(); i++) {
+                writer.write(ItemSingleton.getInstance().listItems.get(i).toString());
+                writer.write("\n");
+            }
+
+            writer.flush();
+            writer.close();
+
+            stream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -70,6 +91,14 @@ public class InfoItem extends AppCompatActivity {
         item.setPhone(editTextPhone.getText().toString());
         item.setType(spinnerInfo.getSelectedItem().toString());
         return item;
+    }
+
+
+    public void fillFieldsUpdate(Item item) {
+        editTextName.setText(item.getName());
+        editTextAddress.setText(item.getAddress());
+        editTextPhone.setText(item.getPhone());
+        spinnerInfo.setSelection();
     }
 
 }

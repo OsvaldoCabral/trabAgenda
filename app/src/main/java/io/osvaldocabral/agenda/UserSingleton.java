@@ -12,8 +12,18 @@ public class UserSingleton {
 
     private UserSingleton() {}
 
+    public UserSingleton(ArrayList<User> userList, User currentUser, int userIndex) {
+        this.userList = userList;
+        this.currentUser = currentUser;
+        this.userIndex = userIndex;
+    }
+
     public static UserSingleton getInstance() {
         return instance;
+    }
+
+    public void addUserList(User user) {
+        userList.add(user);
     }
 
     public User getCurrentUser() {

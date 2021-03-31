@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         buttonLogIn = findViewById(R.id.buttonLogIn);
         buttonSigIn = findViewById(R.id.buttonSigIn);
+
+        loadUserFromFile();
     }
 
 
@@ -96,6 +99,35 @@ public class MainActivity extends AppCompatActivity {
             return isValidAccess;
         }
 
+    }
+
+
+    public void loadUserFromFile() {
+
+        try {
+            InputStream stream = openFileInput("listUser.txt");
+            InputStreamReader streamReader = new InputStreamReader(stream);
+            BufferedReader reader = new BufferedReader(streamReader);
+            String line;
+
+            ArrayList<User> userList = new ArrayList<>();
+            String[] aux;
+
+            while((line = reader.readLine()) != null) {
+                aux = line.split(";");
+                userList.add(new User(aux[0], aux[1]));
+            }
+
+            UserSingleton.getInstance().userList = userList;
+
+            reader.close();
+            streamReader.close();
+            stream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

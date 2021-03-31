@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SigIn extends AppCompatActivity {
@@ -32,11 +33,18 @@ public class SigIn extends AppCompatActivity {
             OutputStream stream = SigIn.this.openFileOutput("listUser.txt", MODE_PRIVATE);
             OutputStreamWriter writer = new OutputStreamWriter(stream);
 
-            writer.write("admin;admin@123\n");
-            writer.write("osvaldo;osvaldo@123\n");
-            writer.write("matheus;matheus@123\n");
-            writer.write("jhonatan;jhonatan@123\n");
-            writer.write("vinicius;vini@123\n");
+            String name = editTextNameSigIn.getText().toString();
+            String password = editTextPasswordSigIn.getText().toString();
+
+            for(int i = UserSingleton.getInstance().userList.size(); i>0; i--) {
+                writer.write(UserSingleton.getInstance().userList.get(i-1).toString());
+                writer.write("\n");
+            }
+
+            writer.write(name + ";" + password);
+            writer.write("\n");
+
+            UserSingleton.getInstance().addUserList(new User(name, password));
 
             writer.flush();
             writer.close();

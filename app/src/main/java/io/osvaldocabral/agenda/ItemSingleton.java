@@ -1,5 +1,6 @@
 package io.osvaldocabral.agenda;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,18 +25,39 @@ public class ItemSingleton {
         listItems.set(itemIndex, item);
     }
 
-    public ArrayList<Item> getListItem() {
+    public ArrayList<String> getFilteredListItem() {
 
-        ArrayList<Item> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
 
         int userIndex = UserSingleton.getInstance().userIndex;
         for(Item item : listItems) {
             if(item.getIdUser() == userIndex) {
-                list.add(item);
+                list.add(item.getName());
             }
         }
 
         return list;
     }
 
+    public int getPositionUpdate(int positionListView) {
+
+        int contByUser = -1;
+        int contByFile = -1;
+        int positionUpdate = -1;
+        int userIndex = UserSingleton.getInstance().userIndex;
+
+        for(Item item : listItems) {
+            contByFile++;
+            if(item.getIdUser() == userIndex) {
+                contByUser++;
+                if(contByUser == positionListView) {
+                    positionUpdate = contByFile;
+                    break;
+                }
+            }
+        }
+
+        return positionUpdate;
+
+    }
 }
